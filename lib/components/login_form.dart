@@ -14,7 +14,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   bool obsecurePass = true;
-  
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -70,9 +70,11 @@ class _LoginFormState extends State<LoginForm> {
           Button(
             width: double.infinity,
             title: 'Sign In',
-            onPressed: () {} ,
+            onPressed: () {
+              Navigator.of(context).pushNamed('main');
+            },
             disable: false,
-          )
+          ),
         ],
       ),
     );

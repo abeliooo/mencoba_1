@@ -1,6 +1,6 @@
 class AppText {
   static final enText = {
-    'welcome_text': 'welcome',
+    'welcome_text': 'Welcome',
     'signIn_text': 'Sign in to your account',
     'registered_text': 'Already have an acount?',
     'register_text': 'You can easily sign up, and connect to the Doctors',

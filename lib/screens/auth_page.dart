@@ -17,7 +17,7 @@ class _AuthPageState extends State<AuthPage> {
     Config().init(context);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.all(25),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +30,7 @@ class _AuthPageState extends State<AuthPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Config.spaceSmall,
+              SizedBox(height: 5),
 
               Text(
                 AppText.enText['signIn_text']!,
@@ -72,7 +72,7 @@ class _AuthPageState extends State<AuthPage> {
               Config.spaceSmall,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 10,
+                spacing: 8,
                 children: const <Widget>[
                   SocialButton(social: 'facebook'),
                   SocialButton(social: 'google'),
