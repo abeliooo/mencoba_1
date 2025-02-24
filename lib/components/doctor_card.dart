@@ -2,8 +2,9 @@ import 'package:mencoba_1/utils/config.dart';
 import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({super.key, required this.doctor, required this.isFav});
+  const DoctorCard({super.key, required this.route, required this.doctor, required this.isFav});
 
+  final String route;
   final Map<String, dynamic> doctor;
   final bool isFav;
 
@@ -71,7 +72,9 @@ class DoctorCard extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(route);
+        },
       ),
     );
   }

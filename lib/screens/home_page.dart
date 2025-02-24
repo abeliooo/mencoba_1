@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mencoba_1/components/appoinment_card.dart';
+import 'package:mencoba_1/components/appointment_card.dart';
 import 'package:mencoba_1/components/doctor_card.dart';
 import 'package:mencoba_1/utils/config.dart';
 
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
               ),
           
               Config.spaceSmall,
-              AppoinmentCard(),
+              AppointmentCard(),
               Config.spaceSmall,
           
               const Text(
@@ -105,7 +105,8 @@ class _HomePageState extends State<HomePage> {
               Config.spaceSmall,
               Column(
                 children: List.generate(10, (index) {
-                  return DoctorCard(
+                  return const DoctorCard(
+                    route: 'doc_details',
                     doctor: {},
                     isFav: false,
                   );

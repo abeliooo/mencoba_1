@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mencoba_1/main_layout.dart';
 import 'package:mencoba_1/screens/auth_page.dart';
+import 'package:mencoba_1/screens/doctor_details.dart';
+import 'package:mencoba_1/screens/home_page.dart';
+import 'package:mencoba_1/screens/success_booked.dart';
 import 'package:mencoba_1/utils/config.dart';
+import 'package:mencoba_1/screens/booking_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,7 +46,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => const AuthPage(),
+        'home' : (context) => const HomePage(),
         'main' : (context) => const MainLayout(),
+        'doc_details' : (context) => const DoctorDetails(),
+        'booking_page' : (context) => const BookingPage(),
+        'success_booked' : (context) => const AppointmentBooked(),
       },
     );
   }
