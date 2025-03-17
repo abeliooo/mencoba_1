@@ -1,6 +1,12 @@
-import 'package:flutter/material.dart';
+// import 'dart:convert';
+import 'package:mencoba_1/components/button.dart';
+import 'package:mencoba_1/main.dart';
+import 'package:mencoba_1/provides/dio_provider.dart';
 import 'package:mencoba_1/utils/config.dart';
-import 'button.dart';
+import 'package:mencoba_1/models/auth_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -67,13 +73,53 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           Config.spaceSmall,
-          Button(
-            width: double.infinity,
-            title: 'Sign In',
-            onPressed: () {
-              Navigator.of(context).pushNamed('main');
+          Consumer<AuthModel>(
+            builder: (context, auth, child) {
+              return Button(
+                width: double.infinity,
+                title: 'Sign In',
+                onPressed: () async {
+                  final token = await DioProvider().getToken(
+                    _emailController.text,
+                    _passController.text,
+                  );
+                  // final user = await DioProvider().getUser(token);
+                    if (token) {
+                      // final SharedPreferences prefs =
+                      //     await SharedPreferences.getInstance();
+                      // final tokenValue = prefs.getString('token') ?? '';
+
+                      // if (tokenValue.isNotEmpty && tokenValue != '') {
+                      //   //get user data
+                      //   final response = await DioProvider().getUser(tokenValue);
+                      //   if (response != null) {
+                      //     setState(() {
+                      //       //json decode
+                      //       Map<String, dynamic> appointment = {};
+                      //       final user = json.decode(response);
+
+                      //       //check if any appointment today
+                      //       for (var doctorData in user['doctor']) {
+                      //         //if there is appointment return for today
+
+                      //         if (doctorData['appointments'] != null) {
+                      //           appointment = doctorData;
+                      //         }
+                      //       }
+
+                      //       auth.loginSuccess(user, appointment);
+                      //       MyApp.navigatorKey.currentState!.pushNamed('main');
+                      //     });
+                      //   }
+                      auth.loginSuccess();
+                      MyApp.navigatorKey.currentState!.pushNamed('main');
+                      // }
+                    }
+                    if (token) {}
+                },
+                disable: false,
+              );
             },
-            disable: false,
           ),
         ],
       ),

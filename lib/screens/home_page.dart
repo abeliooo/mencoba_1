@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mencoba_1/components/appointment_card.dart';
 import 'package:mencoba_1/components/doctor_card.dart';
+import 'package:mencoba_1/provides/dio_provider.dart';
 import 'package:mencoba_1/utils/config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  Map<String, dynamic> user = {};
   List<Map<String, dynamic>> medCat = [
     {"icon": FontAwesomeIcons.userDoctor, "category": "General"},
     {"icon": FontAwesomeIcons.heartPulse, "category": "Cardiology"},
@@ -21,6 +25,20 @@ class _HomePageState extends State<HomePage> {
     {"icon": FontAwesomeIcons.personPregnant, "category": "Gynecology"},
     {"icon": FontAwesomeIcons.teeth, "category": "Dental"},
   ];
+
+  Future<void> getData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+
+    if (token.isNotEmpty && token != '') {
+      final response = await DioProvider().getUser(token);
+      if (response != null) {
+        setState(() {
+          user = json.decode(response);
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +67,12 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               Config.spaceSmall,
-          
+
               const Text(
                 'Category',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-          
+
               Config.spaceSmall,
               SizedBox(
                 height: Config.heightSize * 0.05,
@@ -93,11 +111,11 @@ class _HomePageState extends State<HomePage> {
                 'Appoinment Today',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-          
+
               Config.spaceSmall,
               AppointmentCard(),
               Config.spaceSmall,
-          
+
               const Text(
                 'Top Doctors',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

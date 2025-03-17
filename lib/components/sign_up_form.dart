@@ -1,22 +1,21 @@
-// import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:mencoba_1/components/button.dart';
 import 'package:mencoba_1/main.dart';
 import 'package:mencoba_1/provides/dio_provider.dart';
 import 'package:mencoba_1/utils/config.dart';
 import 'package:mencoba_1/models/auth_model.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   bool obsecurePass = true;
@@ -28,6 +27,19 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          TextFormField(
+            controller: _nameController,
+            keyboardType: TextInputType.text,
+            cursorColor: Config.primaryColor,
+            decoration: const InputDecoration(
+              hintText: 'Username',
+              labelText: 'Username',
+              alignLabelWithHint: true,
+              prefixIcon: Icon(Icons.person_outlined),
+              prefixIconColor: Config.primaryColor,
+            ),
+          ),
+          Config.spaceSmall,
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -77,13 +89,20 @@ class _LoginFormState extends State<LoginForm> {
             builder: (context, auth, child) {
               return Button(
                 width: double.infinity,
-                title: 'Sign In',
+                title: 'Sign Up',
                 onPressed: () async {
-                  final token = await DioProvider().getToken(
+                  final userRegistration = await DioProvider().registerUser(
+                    _nameController.text,
                     _emailController.text,
                     _passController.text,
                   );
-                  // final user = await DioProvider().getUser(token);
+
+                  if (userRegistration) {
+                    final token = await DioProvider().getToken(
+                      _emailController.text,
+                      _passController.text,
+                    );
+                    // final user = await DioProvider().getUser(token);
                     if (token) {
                       // final SharedPreferences prefs =
                       //     await SharedPreferences.getInstance();
@@ -115,7 +134,9 @@ class _LoginFormState extends State<LoginForm> {
                       MyApp.navigatorKey.currentState!.pushNamed('main');
                       // }
                     }
-                    if (token) {}
+                  } else {
+                    print('Failed to register');
+                  }
                 },
                 disable: false,
               );

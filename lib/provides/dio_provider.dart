@@ -6,7 +6,7 @@ class DioProvider {
   Future<dynamic> getToken(String email, String password) async {
     try {
       var response = await Dio().post(
-        'http://192.168.18.100:8000/api/login',
+        'http://192.168.18.79:8000/api/login',
         data: {'email': email, 'password': password},
       );
 
@@ -26,7 +26,7 @@ class DioProvider {
   Future<dynamic> getUser(String token) async {
     try {
       var user = await Dio().get(
-        'http://192.168.18.100:8000/api/user',
+        'http://192.168.18.79:8000/api/user',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
@@ -45,16 +45,17 @@ class DioProvider {
   ) async {
     try {
       var user = await Dio().post(
-        'http://192.168.18.100:8000/api/register',
+        'http://192.168.18.79:8000/api/register',
         data: {'name': username, 'email': email, 'password': password},
       );
+
       if (user.statusCode == 201 && user.data != '') {
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      return error;
+      return false;
     }
   }
 
@@ -67,7 +68,7 @@ class DioProvider {
   ) async {
     try {
       var response = await Dio().post(
-        'http://192.168.18.100:8000/api/book',
+        'http://192.168.18.79:8000/api/book',
         data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
@@ -85,7 +86,7 @@ class DioProvider {
   Future<dynamic> getAppointments(String token) async {
     try {
       var response = await Dio().get(
-        'http://192.168.18.100:8000/api/appointments',
+        'http://192.168.18.79:8000/api/appointments',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
@@ -108,7 +109,7 @@ class DioProvider {
   ) async {
     try {
       var response = await Dio().post(
-        'http://192.168.18.100:8000/api/reviews',
+        'http://192.168.18.79:8000/api/reviews',
         data: {
           'ratings': ratings,
           'reviews': reviews,
@@ -131,7 +132,7 @@ class DioProvider {
   Future<dynamic> storeFavDoc(String token, List<dynamic> favList) async {
     try {
       var response = await Dio().post(
-        'http://192.168.18.100:8000/api/fav',
+        'http://192.168.18.79:8000/api/fav',
         data: {'favList': favList},
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
@@ -149,7 +150,7 @@ class DioProvider {
   Future<dynamic> logout(String token) async {
     try {
       var response = await Dio().post(
-        'http://192.168.18.100:8000/api/logout',
+        'http://192.168.18.79:8000/api/logout',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
